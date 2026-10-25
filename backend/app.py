@@ -34,7 +34,7 @@ def create_app(test_config=None):
     # Enable CORS
     CORS(
         app,
-        resources={r"/api/*": {"origins": "*"}},
+        resources={r"/api/*": {"origins": Config.CORS_ORIGINS}},
         supports_credentials=True,
         expose_headers=["Content-Disposition"]
     )

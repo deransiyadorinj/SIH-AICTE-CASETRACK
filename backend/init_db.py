@@ -10,6 +10,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from backend.config import Config
 from backend.database import init_tables
 
+
+def _required_seed_password(name):
+    password = os.environ.get(name, '')
+    if len(password) < 16 or password.startswith('replace-with-'):
+        raise RuntimeError(f'Set {name} to a unique password of at least 16 characters before seeding')
+    return password
+
+
 def seed_database():
     init_tables()
     conn = sqlite3.connect(Config.DATABASE_PATH)
@@ -26,9 +34,9 @@ def seed_database():
     print("Seeding initial database...")
 
     # 1. Seed Users
-    hashed_admin = generate_password_hash("admin123")
-    hashed_inst = generate_password_hash("institution123")
-    hashed_default = generate_password_hash("password123")
+    hashed_admin = generate_password_hash(_required_seed_password('INITIAL_ADMIN_PASSWORD'))
+    hashed_inst = generate_password_hash(_required_seed_password('INITIAL_INSTITUTION_PASSWORD'))
+    hashed_default = generate_password_hash(_required_seed_password('INITIAL_USER_PASSWORD'))
 
     users_data = [
         ("Deransiya Dorin J", "admin@aicte.gov.in", hashed_admin, "Cloud Architect", "Central Administration", "Cloud Architect & Lead Admin", None, "Active", "2026-10-24 12:30:00"),

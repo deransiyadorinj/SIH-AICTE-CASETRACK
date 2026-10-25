@@ -26,20 +26,6 @@ export default function LoginPage({ onLogin }) {
     }
   };
 
-  const handleDemoLogin = async () => {
-    setEmail('admin@aicte.gov.in');
-    setPassword('admin123');
-    setError('');
-    setLoading(true);
-    try {
-      await onLogin('admin@aicte.gov.in', 'admin123');
-    } catch (err) {
-      setError(err.message || 'Login failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -56,7 +42,7 @@ export default function LoginPage({ onLogin }) {
           </div>
 
           <div className="login-demo-notice">
-            This is a demonstration login. Use the demo credentials or click "Demo Login" below.
+            Sign in with the account credentials provided by your system administrator.
           </div>
 
           {error && <div className="login-error">{error}</div>}
@@ -112,17 +98,6 @@ export default function LoginPage({ onLogin }) {
             </button>
           </form>
 
-          <div className="login-divider">
-            <span>or</span>
-          </div>
-
-          <button className="btn btn-outline btn-block" onClick={handleDemoLogin} disabled={loading}>
-            Demo Login (Preview)
-          </button>
-
-          <div className="login-footer">
-            <p>Demo credentials: <code>admin@aicte.gov.in</code> / <code>admin123</code></p>
-          </div>
         </div>
       </div>
     </div>

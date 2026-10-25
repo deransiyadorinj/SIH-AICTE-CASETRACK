@@ -23,7 +23,7 @@ class BackendAPITestCase(unittest.TestCase):
     def test_02_login_success(self):
         res = self.client.post('/api/auth/login', json={
             'email': 'admin@aicte.gov.in',
-            'password': 'admin123'
+            'password': os.environ['INITIAL_ADMIN_PASSWORD']
         })
         self.assertEqual(res.status_code, 200)
         data = res.get_json()

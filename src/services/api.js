@@ -3,7 +3,7 @@
 // Communicates with Python Flask REST backend at /api
 // =============================================================================
 
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/+$/, '');
 
 /**
  * Standard request wrapper with error handling and credentials support
