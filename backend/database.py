@@ -35,8 +35,11 @@ def execute_db(query, args=(), commit=True):
 
 def init_tables():
     """Initializes tables using a standalone connection (safe outside request context)."""
-    os.makedirs(os.path.dirname(Config.DATABASE_PATH), exist_ok=True)
-    os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
+    db_dir = os.path.dirname(Config.DATABASE_PATH)
+    if db_dir:
+        os.makedirs(db_dir, exist_ok=True)
+    if Config.UPLOAD_FOLDER:
+        os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
     
     conn = sqlite3.connect(Config.DATABASE_PATH)
     conn.execute("PRAGMA foreign_keys = ON;")
